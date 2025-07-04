@@ -22,3 +22,8 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
         df = df[df['flank_wear_(mm)'] > 0.01]  # Remove values ≤ 0.01 mm
 
     return df
+
+def add_features(df: pd.DataFrame) -> pd.DataFrame:
+    df['speed_per_dia'] = df['speed_(rpm)'] / df['diameter_(mm)']
+    df['log_feed'] = np.log(df['feed_(mm/rev)'] + 1e-5)  # To avoid log(0)
+    return df
