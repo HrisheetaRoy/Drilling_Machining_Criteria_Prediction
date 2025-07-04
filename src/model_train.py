@@ -9,7 +9,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
     # Train-test split
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+        X, y, test_size=0.2 #, random_state=42
     )
 
     # Define models that support multi-target regression
