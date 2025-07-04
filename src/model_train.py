@@ -3,7 +3,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
@@ -16,7 +15,6 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
     # Define models that support multi-target regression
     models = {
         'RandomForest': RandomForestRegressor(n_estimators=100, random_state=42),
-        'DecisionTree': DecisionTreeRegressor(random_state=42),
         'XGBoost': XGBRegressor(objective='reg:squarederror', n_estimators=100, random_state=42)
     }
 
