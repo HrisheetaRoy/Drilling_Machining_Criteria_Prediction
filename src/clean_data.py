@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy import stats
+from sklearn.preprocessing import LabelEncoder
 
 def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
     # Drop duplicate rows
@@ -11,6 +12,11 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
 
     # Handle missing values (if any)
     df = df.dropna() 
+    
+    # Encode 'workpiece' column
+    if 'workpiece' in df.columns:
+        le = LabelEncoder()
+        df['workpiece'] = le.fit_transform(df['workpiece'])
     
     # Remove outliers in torque_(nm) using Z-score
     if 'torque_(nm)' in df.columns:
