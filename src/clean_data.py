@@ -13,10 +13,9 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
     # Handle missing values (if any)
     df = df.dropna() 
     
-    # Encode 'workpiece' column
+    # One-hot encode 'workpiece'
     if 'workpiece' in df.columns:
-        le = LabelEncoder()
-        df['workpiece'] = le.fit_transform(df['workpiece'])
+        df = pd.get_dummies(df, columns=['workpiece'], drop_first=True)
     
     # Remove outliers in torque_(nm) using Z-score
     if 'torque_(nm)' in df.columns:
