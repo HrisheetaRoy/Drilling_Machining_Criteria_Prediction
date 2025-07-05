@@ -26,4 +26,12 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
 def add_features(df: pd.DataFrame) -> pd.DataFrame:
     df['speed_per_dia'] = df['speed_(rpm)'] / df['diameter_(mm)']
     df['log_feed'] = np.log(df['feed_(mm/rev)'] + 1e-5)  # To avoid log(0)
+    
+    # New interactions
+    df['torque_feed_ratio'] = df['torque_(nm)'] / (df['feed_(mm/rev)'] + 1e-5)
+    df['material_hardness'] = df['thrust_(n)'] / (df['torque_(nm)'] + 1e-5)
+    
+    # Polynomial feature
+    df['feed_squared'] = df['feed_(mm/rev)'] ** 2
+    df['speed_squared'] = df['speed_(rpm)'] ** 2
     return df
