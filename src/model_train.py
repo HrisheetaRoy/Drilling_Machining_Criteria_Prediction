@@ -19,7 +19,7 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
 
     models = {
         'RandomForest': RandomForestRegressor(
-            n_estimators=100, max_depth=None, min_samples_split=5, random_state=42
+            n_estimators=100, max_depth=None, min_samples_split=5, random_state=30
         ),
         'XGBoost': XGBRegressor(
             objective='reg:squarederror', n_estimators=100, random_state=42
