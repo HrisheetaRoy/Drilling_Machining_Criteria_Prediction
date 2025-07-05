@@ -45,7 +45,3 @@ def visualize(df_clean):
      plt.title("Flank Wear vs Feed")
      plt.show()
 
-     #Clustering Insight (Using PairPlot + Workpiece)
-     sns.pairplot(df_clean, hue='workpiece', diag_kind='kde')
-     plt.suptitle("Pairwise Feature Relationships by Workpiece", y=1.02)
-     plt.show()
