@@ -14,7 +14,7 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
 
     # Define models that support multi-target regression
     models = {
-        'RandomForest': RandomForestRegressor(n_estimators=100, random_state=42),
+        'RandomForest': RandomForestRegressor(n_estimators=200, max_depth=None, min_samples_split=5, random_state=42),
         'XGBoost': XGBRegressor(objective='reg:squarederror', n_estimators=100, random_state=42)
     }
 
