@@ -22,7 +22,7 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
             n_estimators=100, max_depth=None, min_samples_split=5, random_state=30
         ),
         'XGBoost': XGBRegressor(
-            objective='reg:squarederror', n_estimators=100, random_state=42
+            objective='reg:squarederror', n_estimators=100, random_state=80
         )
     }
 
@@ -49,29 +49,29 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
             'MAPE': mape
         }
 
-    # Ensemble model
-    voting = VotingRegressor([
-        ('rf', models['RandomForest']),
-        ('xgb', models['XGBoost'])
-    ])
-    ensemble_model = MultiOutputRegressor(voting)
-    ensemble_model.fit(X_train, y_train)
-    y_pred_ensemble = ensemble_model.predict(X_test)
+    # # Ensemble model
+    # voting = VotingRegressor([
+    #     ('rf', models['RandomForest']),
+    #     ('xgb', models['XGBoost'])
+    # ])
+    # ensemble_model = MultiOutputRegressor(voting)
+    # ensemble_model.fit(X_train, y_train)
+    # y_pred_ensemble = ensemble_model.predict(X_test)
 
-    r2 = r2_score(y_test, y_pred_ensemble, multioutput='raw_values')
-    mae = mean_absolute_error(y_test, y_pred_ensemble, multioutput='raw_values')
-    mse = mean_squared_error(y_test, y_pred_ensemble, multioutput='raw_values')
-    rmse = np.sqrt(mse)
-    mape = mean_absolute_percentage_error(y_test, y_pred_ensemble)
+    # r2 = r2_score(y_test, y_pred_ensemble, multioutput='raw_values')
+    # mae = mean_absolute_error(y_test, y_pred_ensemble, multioutput='raw_values')
+    # mse = mean_squared_error(y_test, y_pred_ensemble, multioutput='raw_values')
+    # rmse = np.sqrt(mse)
+    # mape = mean_absolute_percentage_error(y_test, y_pred_ensemble)
 
-    trained_models['Ensemble'] = ensemble_model
-    evaluation_results['Ensemble'] = {
-        'R2': r2,
-        'MAE': mae,
-        'MSE': mse,
-        'RMSE': rmse,
-        'MAPE': mape
-    }
+    # trained_models['Ensemble'] = ensemble_model
+    # evaluation_results['Ensemble'] = {
+    #     'R2': r2,
+    #     'MAE': mae,
+    #     'MSE': mse,
+    #     'RMSE': rmse,
+    #     'MAPE': mape
+    # }
 
     return {
         'models': trained_models,
