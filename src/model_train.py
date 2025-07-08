@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestRegressor, VotingRegressor
+from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.multioutput import MultiOutputRegressor
 from sklearn.metrics import (
     mean_absolute_error, mean_squared_error, r2_score
@@ -32,7 +33,8 @@ def train_models(X: pd.DataFrame, y: pd.DataFrame) -> dict:
         ),
         'XGBoost': XGBRegressor(
             objective='reg:squarederror', n_estimators=100, random_state=100
-        )
+        ),
+        'KNN': KNeighborsRegressor(n_neighbors=5)
     }
 
     trained_models = {}
