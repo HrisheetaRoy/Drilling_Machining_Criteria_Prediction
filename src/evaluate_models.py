@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 def plot_predictions(y_true, y_pred, target_names):
     for i, target in enumerate(target_names):

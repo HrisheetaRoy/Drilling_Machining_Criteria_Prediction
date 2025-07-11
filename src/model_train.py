@@ -30,7 +30,10 @@ def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
 
     models = {
         'RandomForest': RandomForestRegressor(
-            n_estimators=300, max_depth=None, min_samples_split=2,
+            n_estimators=200,
+            max_depth=10,
+            min_samples_split=2,
+            max_features='sqrt',
             random_state=30
         ),
         'XGBoost': XGBRegressor(
@@ -42,24 +45,24 @@ def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
     trained_models = {}
     evaluation_results = {}
 
+    # Inverse transform test set for all metrics
+    y_test_orig = np.expm1(np.clip(y_test_log.values, 0, 20))
+
     for name, model in models.items():
         wrapped_model = MultiOutputRegressor(model)
         wrapped_model.fit(X_train, y_train_log)
 
         # Predict in log scale
         y_pred_log = wrapped_model.predict(X_test)
-
-        # Inverse transform to original scale with clipping to prevent overflow
-        y_pred = np.expm1(np.clip(y_pred_log, 0, 20))
-        y_test = np.expm1(np.clip(y_test_log.values, 0, 20))
+        y_pred_orig = np.expm1(np.clip(y_pred_log, 0, 20))
 
         # Compute evaluation metrics on original scale
-        r = compute_r(y_test, y_pred)
-        r2 = r2_score(y_test, y_pred, multioutput='raw_values')
-        mae = mean_absolute_error(y_test, y_pred, multioutput='raw_values')
-        mse = mean_squared_error(y_test, y_pred, multioutput='raw_values')
+        r = compute_r(y_test_orig, y_pred_orig)
+        r2 = r2_score(y_test_orig, y_pred_orig, multioutput='raw_values')
+        mae = mean_absolute_error(y_test_orig, y_pred_orig, multioutput='raw_values')
+        mse = mean_squared_error(y_test_orig, y_pred_orig, multioutput='raw_values')
         rmse = np.sqrt(mse)
-        mape = mean_absolute_percentage_error(y_test, y_pred)
+        mape = mean_absolute_percentage_error(y_test_orig, y_pred_orig)
 
         trained_models[name] = wrapped_model
         evaluation_results[name] = {
@@ -75,5 +78,6 @@ def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
         'models': trained_models,
         'metrics': evaluation_results,
         'X_test': X_test,
-        'y_test': y_test_log  # returned in log-scale (raw), for downstream plotting
+        'y_test_log': y_test_log,     # raw log for custom plots
+        'y_test_orig': y_test_orig    # original scale for correct plots and metrics
     }
