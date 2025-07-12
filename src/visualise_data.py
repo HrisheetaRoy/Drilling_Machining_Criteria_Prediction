@@ -6,7 +6,7 @@ import numpy as np
 def visualize(df_clean):
     df_clean = df_clean.drop(columns=['no.'], errors='ignore')
     sns.set(style="whitegrid", palette="pastel", font_scale=1.1)
-    plt.rcParams["figure.figsize"] = (10, 6)
+    plt.rcParams["figure.figsize"] = (7, 4)
 
     # Distribution plots
     process_params = ['diameter_(mm)', 'speed_(rpm)', 'feed_(mm/rev)']
@@ -33,7 +33,7 @@ def visualize(df_clean):
         plt.title(f'Outlier Detection - {col.replace("_", " ").title()}')
         plt.show()
 
-    # Trend Analysis
+    # Trend Analysis: Linear regression plots - lmplots
     sns.lmplot(data=df_clean, x='speed_(rpm)', y='flank_wear_(mm)', height=6, aspect=1.5)
     plt.title("Flank Wear vs Speed")
     plt.show()
@@ -62,7 +62,7 @@ def visualize(df_clean):
     plt.ylabel("Count")
     plt.show()
 
-    # Violin Plot: Flank wear vs speed bin
+    # Violin Plot: Flank wear vs speed bin, Displays distribution + spread
     plt.figure()
     sns.violinplot(data=df_clean, x='speed_bin', y='flank_wear_(mm)', inner='quart')
     plt.xticks(rotation=45)
