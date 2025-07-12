@@ -32,7 +32,7 @@ def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
    
     models = {
     'RandomForest': RandomForestRegressor(
-        n_estimators=300,
+        n_estimators=400,
         max_depth=None,
         min_samples_split=2,
         random_state=30,
