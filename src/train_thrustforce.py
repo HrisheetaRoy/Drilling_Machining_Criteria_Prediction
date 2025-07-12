@@ -28,10 +28,10 @@ def train_thrustforce_models(X, y_flank):
     # 🔹 Random Forest (Tuned)
     rf_model = RandomForestRegressor(
         n_estimators=10,
-        max_depth=100,
-        min_samples_split=5,
+        max_depth=10,
+        min_samples_split=10,
         min_samples_leaf=2,
-        random_state=42,
+        random_state=70,
         n_jobs=-1
     )
     rf_model.fit(X_train, y_train)
@@ -42,7 +42,7 @@ def train_thrustforce_models(X, y_flank):
     xgb_model = XGBRegressor(
         objective='reg:squarederror',
         n_estimators=100,
-        learning_rate=0.01,
+        learning_rate=0.1,
         max_depth=5,
         subsample=0.8,
         colsample_bytree=0.8,
