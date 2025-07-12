@@ -10,15 +10,15 @@ def mean_absolute_percentage_error(y_true, y_pred):
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.mean(np.abs((y_true - y_pred) / np.clip(np.abs(y_true), 1e-10, None))) * 100
 
-def train_flankwear_models(X, y_flank):
+def train_thrustforce_models(X, y_flank):
     y_log = np.log1p(y_flank)
     X_train, X_test, y_train, y_test = train_test_split(X, y_log, test_size=0.2, random_state=42)
     y_test_actual = np.expm1(y_test)
 
     def evaluate(y_true, y_pred):
         return {
-            'R': (pearsonr(y_true, y_pred)[0])+0.15,
-            'R2': (r2_score(y_true, y_pred))+0.32,
+            'R': (pearsonr(y_true, y_pred)[0]),
+            'R2': (r2_score(y_true, y_pred)),
             'MAE': mean_absolute_error(y_true, y_pred),
             'MSE': mean_squared_error(y_true, y_pred),
             'RMSE': np.sqrt(mean_squared_error(y_true, y_pred)),
@@ -27,11 +27,11 @@ def train_flankwear_models(X, y_flank):
 
     # 🔹 Random Forest (Tuned)
     rf_model = RandomForestRegressor(
-        n_estimators=300,
+        n_estimators=10,
         max_depth=100,
         min_samples_split=5,
         min_samples_leaf=2,
-        random_state=30,
+        random_state=42,
         n_jobs=-1
     )
     rf_model.fit(X_train, y_train)
@@ -41,7 +41,7 @@ def train_flankwear_models(X, y_flank):
     # 🔹 XGBoost (Tuned)
     xgb_model = XGBRegressor(
         objective='reg:squarederror',
-        n_estimators=900,
+        n_estimators=100,
         learning_rate=0.01,
         max_depth=5,
         subsample=0.8,

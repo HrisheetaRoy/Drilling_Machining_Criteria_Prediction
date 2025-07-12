@@ -26,27 +26,26 @@ def compute_r(y_true, y_pred):
 def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
     # Split log-transformed target data
     X_train, X_test, y_train_log, y_test_log = train_test_split(
-        X, y_log, test_size=0.2, random_state=42
+        X, y_log, test_size=0.25, random_state=42
     )
-
    
     models = {
     'RandomForest': RandomForestRegressor(
-        n_estimators=400,
+        n_estimators=100,
         max_depth=None,
         min_samples_split=2,
-        random_state=30,
+        random_state=42,
         n_jobs=1
+    ),
+    'XGBoost': XGBRegressor(
+        objective='reg:squarederror', n_estimators=10, random_state=0,
+        n_jobs=1, verbosity=0
     ),
     'AdaBoost': AdaBoostRegressor(
         estimator=DecisionTreeRegressor(max_depth=4),
         n_estimators=100,
-        learning_rate=0.1,
+        learning_rate=0.5,
         random_state=100
-    ),
-    'KNN': KNeighborsRegressor(
-        n_neighbors=5,
-        n_jobs=1
     )
 }
 #     models = {
