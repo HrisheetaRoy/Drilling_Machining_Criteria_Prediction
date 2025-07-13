@@ -10,7 +10,7 @@ from sklearn.metrics import (
     mean_absolute_error, mean_squared_error, r2_score
 )
 
-
+#
 def mean_absolute_percentage_error(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / np.maximum(np.abs(y_true), 1e-5))) * 100
 
@@ -26,19 +26,19 @@ def compute_r(y_true, y_pred):
 def train_models(X: pd.DataFrame, y_log: pd.DataFrame) -> dict:
     # Split log-transformed target data
     X_train, X_test, y_train_log, y_test_log = train_test_split(
-        X, y_log, test_size=0.25, random_state=42
+        X, y_log, test_size=0.2, random_state=42
     )
    
     models = {
     'RandomForest': RandomForestRegressor(
-        n_estimators=100,
-        max_depth=None,
+        n_estimators=10,
+        max_depth=10,
         min_samples_split=2,
         random_state=42,
         n_jobs=1
     ),
     'XGBoost': XGBRegressor(
-        objective='reg:squarederror', n_estimators=10, random_state=0,
+        objective='reg:squarederror', n_estimators=20, random_state=20,
         n_jobs=1, verbosity=0
     ),
     'AdaBoost': AdaBoostRegressor(
