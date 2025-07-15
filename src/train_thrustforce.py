@@ -69,7 +69,9 @@ def train_thrustforce_models(X, y_flank):
         },
         'XGBoost': {
             'model': xgb_model,
-            'metrics': xgb_metrics
+            'metrics': xgb_metrics,
+            'X_test': X_test,       # ✅ Add this
+            'y_test': y_test        # ✅ (in log scale)
         },
         'AdaBoost': {
             'model': ada_model,

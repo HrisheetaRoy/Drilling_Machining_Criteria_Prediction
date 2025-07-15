@@ -63,16 +63,19 @@ def train_flankwear_models(X, y_flank):
     ada_metrics = evaluate(y_test_actual, ada_y_pred)
 
     return {
-        'RandomForest': {
-            'model': rf_model,
-            'metrics': rf_metrics
-        },
-        'XGBoost': {
-            'model': xgb_model,
-            'metrics': xgb_metrics
-        },
-        'AdaBoost': {
-            'model': ada_model,
-            'metrics': ada_metrics
-        }
+    'RandomForest': {
+        'model': rf_model,
+        'metrics': rf_metrics
+    },
+    'XGBoost': {
+        'model': xgb_model,
+        'metrics': xgb_metrics,
+        'X_test': X_test,        # ✅ Add this
+        'y_test': y_test         # ✅ (optional) still in log scale
+    },
+    'AdaBoost': {
+        'model': ada_model,
+        'metrics': ada_metrics
     }
+}
+

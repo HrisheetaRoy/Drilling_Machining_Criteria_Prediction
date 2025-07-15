@@ -1,3 +1,5 @@
+# Winsorizing using Interquartile Range-based thresholds [especially good method when the data has skewed distributions or natural outliers]
+
 import pandas as pd
 
 def cap_outliers_iqr(df: pd.DataFrame, column: str, multiplier: float = 1.5) -> pd.DataFrame:
@@ -11,3 +13,9 @@ def cap_outliers_iqr(df: pd.DataFrame, column: str, multiplier: float = 1.5) -> 
     
     df[column] = df[column].clip(lower=lower_bound, upper=upper_bound)
     return df
+
+# This line caps values:
+
+# Anything below Q1 - 1.5×IQR is replaced with the lower bound
+
+# Anything above Q3 + 1.5×IQR is replaced with the upper bound
