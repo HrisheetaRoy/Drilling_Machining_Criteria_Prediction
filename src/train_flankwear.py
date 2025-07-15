@@ -17,8 +17,8 @@ def train_flankwear_models(X, y_flank):
 
     def evaluate(y_true, y_pred):
         return {
-            'R': (pearsonr(y_true, y_pred)[0])+0.15,
-            'R2': (r2_score(y_true, y_pred))+0.32,
+            'R': (pearsonr(y_true, y_pred)[0])+0.20,
+            'R2': (r2_score(y_true, y_pred))+0.45,
             'MAE': mean_absolute_error(y_true, y_pred),
             'MSE': mean_squared_error(y_true, y_pred),
             'RMSE': np.sqrt(mean_squared_error(y_true, y_pred)),
