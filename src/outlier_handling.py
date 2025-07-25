@@ -3,9 +3,9 @@
 import pandas as pd
 
 def cap_outliers_iqr(df: pd.DataFrame, column: str, multiplier: float = 1.5) -> pd.DataFrame:
-    Q1 = df[column].quantile(0.25)
-    Q3 = df[column].quantile(0.75)
-    IQR = Q3 - Q1
+    Q1 = df[column].quantile(0.25) #calc 1st  quartile of the specified col
+    Q3 = df[column].quantile(0.75) #calc 3rd  quartile of the specified col
+    IQR = Q3 - Q1 #InterQuartileRange
     lower_bound = Q1 - multiplier * IQR
     upper_bound = Q3 + multiplier * IQR
 
